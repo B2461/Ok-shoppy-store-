@@ -5,6 +5,7 @@ export interface Product {
   cat: string;
   price: number;
   img: string;
+  desc?: string;
 }
 
 export interface ChatMessage {

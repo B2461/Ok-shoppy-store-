@@ -10,12 +10,14 @@ import Sidebar from './components/Sidebar';
 import ListingForm from './components/ListingForm';
 import ChatWidget from './components/ChatWidget';
 import Footer from './components/Footer';
+import SellerDashboard from './components/SellerDashboard';
 
 const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>(DEMO_PRODUCTS);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(DEMO_PRODUCTS);
   const [searchQuery, setSearchQuery] = useState('');
   const [isListingFormVisible, setListingFormVisible] = useState(false);
+  const [isDashboardVisible, setDashboardVisible] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { kind: 'bot', text: 'Hi! How can we help you today? Ask about listings, payments or tracking.' }
   ]);
@@ -69,6 +71,16 @@ const App: React.FC = () => {
     alert('Listing published (demo). Sellers will receive orders here.');
   };
 
+  const handleDeleteProduct = (id: number) => {
+    if (window.confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+        setProducts(prev => prev.filter(p => p.id !== id));
+    }
+  };
+
+  const handleEditProduct = (id: number) => {
+      alert(`Editing product ID ${id}. (Feature not implemented in this demo)`);
+  };
+
   const openListingForm = () => {
     setListingFormVisible(true);
     setTimeout(() => {
@@ -110,7 +122,11 @@ const App: React.FC = () => {
             </div>
           </div>
           <aside className="flex flex-col gap-4">
-            <Sidebar onOpenListing={openListingForm} setRealtimeStatus={setRealtimeStatus} />
+            <Sidebar 
+                onOpenListing={openListingForm} 
+                setRealtimeStatus={setRealtimeStatus}
+                onOpenDashboard={() => setDashboardVisible(true)}
+            />
           </aside>
         </main>
         {isListingFormVisible && (
@@ -126,6 +142,14 @@ const App: React.FC = () => {
         onSendMessage={handleSendMessage}
         isReplying={isBotReplying}
       />
+      {isDashboardVisible && (
+        <SellerDashboard
+            products={products}
+            onClose={() => setDashboardVisible(false)}
+            onDeleteProduct={handleDeleteProduct}
+            onEditProduct={handleEditProduct}
+        />
+      )}
     </div>
   );
 };

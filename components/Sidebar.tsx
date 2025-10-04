@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 interface SidebarProps {
     onOpenListing: () => void;
     setRealtimeStatus: React.Dispatch<React.SetStateAction<{text: string; pulse: boolean}>>;
+    onOpenDashboard: () => void;
 }
 
 const RealtimeIcon: React.FC = () => (
@@ -14,7 +15,7 @@ const RealtimeIcon: React.FC = () => (
 );
 
 
-const Sidebar: React.FC<SidebarProps> = ({ onOpenListing, setRealtimeStatus }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onOpenListing, setRealtimeStatus, onOpenDashboard }) => {
     const [awb, setAwb] = useState('');
     const [trackResult, setTrackResult] = useState('No tracking yet.');
     const [isTracking, setIsTracking] = useState(false);
@@ -45,10 +46,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onOpenListing, setRealtimeStatus }) =
         }, 1500);
     };
 
-    const openDashboard = () => {
-        alert('Seller dashboard demo — manage listings and payouts here (prototype)');
-    };
-
     return (
         <>
             <div className="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-b from-[rgba(11,130,255,0.08)] to-[rgba(11,130,255,0.03)]">
@@ -68,7 +65,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onOpenListing, setRealtimeStatus }) =
                 </div>
                 <div className="flex gap-2">
                     <button onClick={onOpenListing} className="flex-1 bg-[#ff7a00] border-0 px-4 py-2.5 rounded-lg text-[#061226] font-semibold hover:opacity-90 transition-opacity">Create Listing</button>
-                    <button onClick={openDashboard} className="bg-[#0b84ff] border-0 px-4 py-2.5 rounded-lg text-white font-semibold hover:opacity-90 transition-opacity">Seller Dashboard</button>
+                    <button onClick={onOpenDashboard} className="bg-[#0b84ff] border-0 px-4 py-2.5 rounded-lg text-white font-semibold hover:opacity-90 transition-opacity">Seller Dashboard</button>
                 </div>
             </div>
 
